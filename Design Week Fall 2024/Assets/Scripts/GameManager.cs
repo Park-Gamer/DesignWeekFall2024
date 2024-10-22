@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool monkey1Hit = false; // Determines if player 1 lost
     [SerializeField] bool monkey2Hit = false; // Determines if player 2 lost
 
+    [SerializeField] bool m1readyCheck = false; // Determines if player 1 is ready
+    [SerializeField] bool m2readyCheck = false; // Determines if player 2 is ready
+
     void Start()
     {
         // Get player components
