@@ -19,11 +19,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] int minTimerValue = 1;
     [SerializeField] int maxTimerValue = 3;
     private int randomInt; // Sets a random number between countdown timer going down to add for unpredictability
+    // Draw timers
+    public float m1drawTime, m2drawTime;
+    private bool m1isTiming = false;
+    private bool m2isTiming = false;
+    [SerializeField] TextMeshProUGUI monkey1Time, monkey2Time;
     // Bool checks
     [SerializeField] bool canDraw = false; // Determines when players can draw
-    [SerializeField] bool monkey1Hit = false; // Determines if player 1 lost
-    [SerializeField] bool monkey2Hit = false; // Determines if player 2 lost
-    [SerializeField] bool canStart = false;
+    public bool monkey1Hit = false; // Determines if player 1 lost
+    public bool monkey2Hit = false; // Determines if player 2 lost
+    private bool canStart = false;
+    private bool hasShot = false;
 
     AudioManager audioManager;
 
@@ -43,8 +49,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        WinState();
+
         if (canDraw) // Timer check
         {
+            m1isTiming = true;
+            m2isTiming = true;
             Monkey1Check();
             Monkey2Check();
         }
@@ -54,7 +64,7 @@ public class GameManager : MonoBehaviour
             countDownVisual.text = "Too Early!";
             countdownTime = 4;
         }
-        if (Input.GetKeyDown(KeyCode.R)) // Reload scene
+        else if (Input.GetKeyDown(KeyCode.R)) // Reload scene
         {
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
@@ -63,29 +73,40 @@ public class GameManager : MonoBehaviour
 
     void Monkey1Check() // Player 2 input
     {
-        if (Input.GetKeyDown(KeyCode.D)) 
+        if (Input.GetKeyDown(KeyCode.D) && !monkey1Hit) 
         {
+            m2isTiming = false;
             m2Anim.SetBool("m2Fire", true); // Play animation
             monkey1Hit = true; // Set player 1 to lose
+            if(!hasShot)
+            {
+                hasShot = true;
+                audioManager.PlaySFX(audioManager.bang);
+            }
         }
         if (monkey1Hit && !monkey2Hit) // Checks if player 1 has lost and player 2 hasn't
         {
             m1Anim.SetBool("m1Lose", true);
-            Debug.Log("Player 2 Wins!");        
         }
     }
 
     void Monkey2Check() // Player 1 input
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && !monkey2Hit)
         {
+            m1isTiming = false;
             m1Anim.SetBool("m1Fire", true);
             monkey2Hit = true; // Set player 2 to lose
+            if (!hasShot)
+            {
+                hasShot = true;
+                audioManager.PlaySFX(audioManager.bang);
+            }
         }
         if (monkey2Hit && !monkey1Hit) // Checks if player 2 has lost and player 1 hasn't
         {
             m2Anim.SetBool("m2Lose", true);
-            Debug.Log("Player 1 Wins!");
+            audioManager.PlaySFX(audioManager.bang);
         }
     }
 
@@ -106,7 +127,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(randomInt); // Wait the random number before decreasing countdown
             countdownTime--; // Lower countdown
         }
-
+        if (countdownTime == 0)
+        {
+            audioManager.PlaySFX(audioManager.draw);
+        }
         canDraw = true; // When countdown is zero players can draw
         countDownVisual.text = "Draw!"; 
         yield return new WaitForSeconds(1f); // Wait before deleting text
@@ -126,9 +150,29 @@ public class GameManager : MonoBehaviour
             case 1:
                 audioManager.PlaySFX(audioManager.num1);
                 break;
-            case 0:
-                audioManager.PlaySFX(audioManager.draw);
-                break;
+        }
+    }
+
+    void WinState()
+    {
+        if (m1isTiming)
+        {
+            m1drawTime += Time.deltaTime; // Time.deltaTime is in seconds
+        }
+        else
+        {
+            m1isTiming = false;
+            monkey1Time.text = "Monkey 1's Draw Time: " + m1drawTime.ToString("0.000") + "ms";
+        }
+
+        if (m2isTiming)
+        {
+            m2drawTime += Time.deltaTime;
+        }
+        else
+        {
+            m2isTiming = false;
+            monkey2Time.text = "Monkey 2's Draw Time: " + m2drawTime.ToString("0.000") + "ms";
         }
     }
 }
