@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private Animator m1Anim;
     private Animator m2Anim;
     // Countdown timer
-    [SerializeField] int countdownTime;
+    public int countdownTime;
     [SerializeField] TextMeshProUGUI countDownVisual;
     [SerializeField] int minTimerValue = 1;
     [SerializeField] int maxTimerValue = 3;
@@ -23,9 +23,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool canDraw = false; // Determines when players can draw
     [SerializeField] bool monkey1Hit = false; // Determines if player 1 lost
     [SerializeField] bool monkey2Hit = false; // Determines if player 2 lost
+    [SerializeField] bool canStart = false;
 
-    [SerializeField] bool m1readyCheck = false; // Determines if player 1 is ready
-    [SerializeField] bool m2readyCheck = false; // Determines if player 2 is ready
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     void Start()
     {
@@ -86,8 +91,16 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DrawCountDown() // Countdown till draw timer
     {
-        while (countdownTime > 0) // While loop until countdown is zero
+        while (canStart == false)
         {
+            countDownVisual.gameObject.SetActive(false);
+            yield return new WaitForSeconds(4f); // Wait before deleting text
+            canStart = true;
+            countDownVisual.gameObject.SetActive(true);
+        }
+        while (countdownTime > 0 && canStart) // While loop until countdown is zero
+        {
+            AudioCountDown();
             randomInt = Random.Range(minTimerValue, maxTimerValue + 1); // Gets a random number within the min/max threshold to use for time between counting down
             countDownVisual.text = countdownTime.ToString(); // Convert timer to string for UI
             yield return new WaitForSeconds(randomInt); // Wait the random number before decreasing countdown
@@ -98,5 +111,24 @@ public class GameManager : MonoBehaviour
         countDownVisual.text = "Draw!"; 
         yield return new WaitForSeconds(1f); // Wait before deleting text
         countDownVisual.gameObject.SetActive(false); // Delete text
+    }
+
+    void AudioCountDown()
+    {
+        switch (countdownTime)
+        {
+            case 3:
+                audioManager.PlaySFX(audioManager.num3);
+                break;
+            case 2:
+                audioManager.PlaySFX(audioManager.num2);
+                break;
+            case 1:
+                audioManager.PlaySFX(audioManager.num1);
+                break;
+            case 0:
+                audioManager.PlaySFX(audioManager.draw);
+                break;
+        }
     }
 }
