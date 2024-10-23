@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    PauseMenu pauseMenu;
+
     [Header("----------- Audio Source -----------")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
@@ -16,10 +19,27 @@ public class AudioManager : MonoBehaviour
     public AudioClip draw;
     public AudioClip bang;
 
+    private void Awake()
+    {
+        pauseMenu = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PauseMenu>();
+    }
+
     private void Start()
     {
         musicSource.clip = duelMusic;
         musicSource.Play();
+    }
+
+    private void Update()
+    {
+        if (pauseMenu.isPaused)
+        {
+            musicSource.Pause();
+        }
+        else
+        {
+            musicSource.UnPause();
+        }
     }
 
     public void PlaySFX(AudioClip clip)
