@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Get audio manager
     }
 
     void Start()
@@ -50,10 +50,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         WinState();
-
-        if (Input.GetKeyDown(KeyCode.D) && !hasShot && canDraw)
+        // Play audio when either player shoots
+        if (Input.GetKeyDown(KeyCode.D) && !hasShot && canDraw) 
         {
-            audioManager.PlaySFX(audioManager.bang);
+            audioManager.PlaySFX(audioManager.bang); 
         }
         else if (Input.GetKeyDown(KeyCode.A) && !hasShot && canDraw)
         {
@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
 
         if (canDraw) // Timer check
         {
-            m1isTiming = true;
-            m2isTiming = true;
+            m1isTiming = true; // Begins timer for player 1
+            m2isTiming = true; // Begins timer for player 2
             Monkey1Check();
             Monkey2Check();
         }
@@ -84,8 +84,8 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D) && !monkey1Hit) 
         {
-            hasShot = true;
-            m2isTiming = false;
+            hasShot = true; 
+            m2isTiming = false; // Stops timer when player shot
             m2Anim.SetBool("m2Fire", true); // Play animation
             monkey1Hit = true; // Set player 1 to lose
         }
@@ -99,9 +99,9 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A) && !monkey2Hit)
         {
-            hasShot = true;
-            m1isTiming = false;
-            m1Anim.SetBool("m1Fire", true);
+            hasShot = true; 
+            m1isTiming = false; // Stops timer when player shot
+            m1Anim.SetBool("m1Fire", true); // Play animation
             monkey2Hit = true; // Set player 2 to lose
         }
         if (monkey2Hit && !monkey1Hit) // Checks if player 2 has lost and player 1 hasn't
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         while (canStart == false)
         {
             countDownVisual.gameObject.SetActive(false);
-            yield return new WaitForSeconds(4f); // Wait before deleting text
+            yield return new WaitForSeconds(4f); // Wait before activating text
             canStart = true;
             countDownVisual.gameObject.SetActive(true);
         }
@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
 
     void AudioCountDown()
     {
+        // Play audio based on the number in the countdown
         switch (countdownTime)
         {
             case 3:
@@ -155,24 +156,24 @@ public class GameManager : MonoBehaviour
 
     void WinState()
     {
-        if (m1isTiming)
+        if (m1isTiming) // Starts timer
         {
             m1drawTime += Time.deltaTime; // Time.deltaTime is in seconds
         }
-        else
+        else // When timer stops
         {
             m1isTiming = false;
-            monkey1Time.text = "Monkey 1's Draw Time: " + m1drawTime.ToString("0.000") + "ms";
+            monkey1Time.text = "Monkey 1's Draw Time: " + m1drawTime.ToString("0.000") + "ms"; // Set float variable to text
         }
 
-        if (m2isTiming)
+        if (m2isTiming) // Starts timer
         {
-            m2drawTime += Time.deltaTime;
+            m2drawTime += Time.deltaTime; // Time.deltaTime is in seconds
         }
-        else
+        else // When timer stops
         {
             m2isTiming = false;
-            monkey2Time.text = "Monkey 2's Draw Time: " + m2drawTime.ToString("0.000") + "ms";
+            monkey2Time.text = "Monkey 2's Draw Time: " + m2drawTime.ToString("0.000") + "ms"; // Set float variable to text
         }
     }
 }
