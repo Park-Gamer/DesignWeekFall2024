@@ -26,8 +26,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI monkey1Time, monkey2Time;
     // Bool checks
     [SerializeField] bool canDraw = false; // Determines when players can draw
-    public bool monkey1Hit = false; // Determines if player 1 lost
-    public bool monkey2Hit = false; // Determines if player 2 lost
+    public bool monkey1Hit = false; // Determines if player hit
+    public bool monkey2Hit = false; 
+    public bool monkey1Win = false; // Determines if player lost
+    public bool monkey2Win = false;
     private bool canStart = false;
     private bool hasShot = false;
 
@@ -73,7 +75,8 @@ public class GameManager : MonoBehaviour
             countDownVisual.text = "Too Early!";
             countdownTime = 4;
         }
-        else if (Input.GetKeyDown(KeyCode.R)) // Reload scene
+
+        if (Input.GetKeyDown(KeyCode.R)) // Reload scene
         {
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
@@ -92,6 +95,8 @@ public class GameManager : MonoBehaviour
         if (monkey1Hit && !monkey2Hit) // Checks if player 1 has lost and player 2 hasn't
         {
             m1Anim.SetBool("m1Lose", true);
+            monkey2Win = true;
+            monkey1Win = false;
         }
     }
 
@@ -107,6 +112,8 @@ public class GameManager : MonoBehaviour
         if (monkey2Hit && !monkey1Hit) // Checks if player 2 has lost and player 1 hasn't
         {
             m2Anim.SetBool("m2Lose", true);
+            monkey1Win = true;
+            monkey2Win = false;
         }
     }
 

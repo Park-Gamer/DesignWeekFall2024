@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
-    public GameObject resultsScreen;
+    [SerializeField] TextMeshProUGUI player1Win, player2Win;
+    public GameObject winScreen;
     GameManager gameManager;
-    private bool revealState = false;
 
     private void Awake()
     {
@@ -17,25 +17,12 @@ public class WinScreen : MonoBehaviour
     }
     void Start()
     {
-        resultsScreen.SetActive(false);
+        winScreen.SetActive(false);
     }
-
-    void Update()
+    private void Update()
     {
-        if (gameManager.monkey1Hit || gameManager.monkey2Hit)
-        {
-            if (!revealState)
-            {
-                resultsScreen.SetActive(true);
-            }
-            StartCoroutine(FadeOut());
-        }
-    }
 
-    IEnumerator FadeOut() 
-    {
-        revealState = true;
-        yield return new WaitForSeconds(7f);
-        resultsScreen.SetActive(false);
+        player1Win.text = "Winner!";
+        player2Win.text = "Winner!";
     }
 }
