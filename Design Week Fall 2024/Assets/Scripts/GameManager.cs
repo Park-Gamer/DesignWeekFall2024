@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     // Game Objects
     [SerializeField] GameObject Monkey1;
     [SerializeField] GameObject Monkey2;
+    [SerializeField] GameObject zoomIn;
     private Animator m1Anim;
     private Animator m2Anim;
     // Countdown timer
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI monkey1Time, monkey2Time;
     // Bool checks
     [SerializeField] bool canDraw = false; // Determines when players can draw
+    public bool monkey1Ready = false; 
+    public bool monkey2Ready = false;
+    public bool readyCheck = false;
     public bool monkey1Hit = false; // Determines if player hit
     public bool monkey2Hit = false; 
     public bool monkey1Win = false; // Determines if player lost
@@ -183,4 +187,20 @@ public class GameManager : MonoBehaviour
             monkey2Time.text = "Monkey 2's Draw Time: " + m2drawTime.ToString("0.000") + "ms"; // Set float variable to text
         }
     }
+
+    void ReadyCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            monkey1Ready = true;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            monkey2Ready = true;
+        }
+        if (monkey1Ready && monkey2Ready)
+        {
+            readyCheck = true;
+        }
+    }    
 }
