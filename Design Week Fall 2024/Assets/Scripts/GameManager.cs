@@ -51,6 +51,15 @@ public class GameManager : MonoBehaviour
     {
         WinState();
 
+        if (Input.GetKeyDown(KeyCode.D) && !hasShot && canDraw)
+        {
+            audioManager.PlaySFX(audioManager.bang);
+        }
+        else if (Input.GetKeyDown(KeyCode.A) && !hasShot && canDraw)
+        {
+            audioManager.PlaySFX(audioManager.bang);
+        }
+
         if (canDraw) // Timer check
         {
             m1isTiming = true;
@@ -75,14 +84,10 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D) && !monkey1Hit) 
         {
+            hasShot = true;
             m2isTiming = false;
             m2Anim.SetBool("m2Fire", true); // Play animation
             monkey1Hit = true; // Set player 1 to lose
-            if(!hasShot)
-            {
-                hasShot = true;
-                audioManager.PlaySFX(audioManager.bang);
-            }
         }
         if (monkey1Hit && !monkey2Hit) // Checks if player 1 has lost and player 2 hasn't
         {
@@ -94,19 +99,14 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A) && !monkey2Hit)
         {
+            hasShot = true;
             m1isTiming = false;
             m1Anim.SetBool("m1Fire", true);
             monkey2Hit = true; // Set player 2 to lose
-            if (!hasShot)
-            {
-                hasShot = true;
-                audioManager.PlaySFX(audioManager.bang);
-            }
         }
         if (monkey2Hit && !monkey1Hit) // Checks if player 2 has lost and player 1 hasn't
         {
             m2Anim.SetBool("m2Lose", true);
-            audioManager.PlaySFX(audioManager.bang);
         }
     }
 

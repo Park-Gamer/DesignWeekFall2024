@@ -35,7 +35,7 @@ public class WinScreen : MonoBehaviour
     IEnumerator FadeOut() 
     {
         revealState = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
         resultsScreen.SetActive(false);
     }
 }
