@@ -5,24 +5,39 @@ using UnityEngine;
 
 public class ArduinoConnection : MonoBehaviour
 {
-    SerialPort data_stream = new SerialPort("COM7", 19200);
-    public string recievedString;
-    public GameObject test_data;
-    public float sensitivity = 0.01f;
+    private SerialPort dataStream = new SerialPort("COM4", 115200); // Change to your COM port
+    public float receivedFloat; // This variable will store the float data
 
-    public string[] datas;
-
-
-    void Start()
+    private void Awake()
     {
-        data_stream.Open();
+        // Open the serial port
+        dataStream.Open();
+        dataStream.ReadTimeout = 50; // Set a timeout to avoid freezing
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        recievedString = data_stream.ReadLine();
+        // Check if the serial port is open and if there's data available
+        if (dataStream.IsOpen && dataStream.BytesToRead > 0)
+        {
+            try
+            {
+                string receivedString = dataStream.ReadLine(); // Read a line from the serial port
+                receivedFloat = float.Parse(receivedString); // Parse the string to a float
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Error reading from serial port: " + e.Message); // Log any errors
+            }
+        }
+    }
 
-        string[] strings = recievedString.Split(',');
+    private void OnApplicationQuit()
+    {
+        // Close the serial port when the application quits
+        if (dataStream.IsOpen)
+        {
+            dataStream.Close();
+        }
     }
 }
