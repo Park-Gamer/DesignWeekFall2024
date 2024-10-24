@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: ece133797f8b2af4b915c8d2e6ff77f5
   - enabled: 1
+    path: Assets/Scenes/ReadyCheck.unity
+    guid: 022eefdc85100654690b296d3e0e0f81
+  - enabled: 1
     path: Assets/Scenes/MainGame.unity
     guid: 718ab31319417e04ebdb3d838d4dc92e
   - enabled: 1
