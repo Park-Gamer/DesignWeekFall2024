@@ -9,6 +9,13 @@ public class ReadyCheck : MonoBehaviour
     public bool p2Ready = false;
     public GameObject ready1Off, ready1On, ready2Off, ready2On;
 
+    MenuAudio audioController;
+
+    private void Awake()
+    {
+        audioController = GameObject.FindGameObjectWithTag("Audio").GetComponent<MenuAudio>(); // Get audio manager
+    }
+
     private void Start()
     {
         ready1On.SetActive(false);
@@ -23,19 +30,25 @@ public class ReadyCheck : MonoBehaviour
             p1Ready = true;
             ready1Off.SetActive(false);
             ready1On.SetActive(true);
-
+            audioController.PlaySFX(audioController.readyClick);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             p2Ready = true;
             ready2Off.SetActive(false);
             ready2On.SetActive(true);
+            audioController.PlaySFX(audioController.readyClick);
         }
 
         if (p1Ready && p2Ready)
         {
-            SceneManager.LoadScene("MainGame");
+            StartCoroutine(DelayForAudio());
         }
     }
 
+    IEnumerator DelayForAudio() // Countdown till draw timer
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("MainGame");
+    }
 }

@@ -2777,7 +2777,8 @@ MonoBehaviour:
   num3: {fileID: 8300000, guid: 7cd4353b987a1624890d1dceea465541, type: 3}
   num2: {fileID: 8300000, guid: 8a5e760404790dd418af56437f81f4ad, type: 3}
   num1: {fileID: 8300000, guid: 380e8dacb589e8947a87246eef9f7066, type: 3}
-  draw: {fileID: 8300000, guid: 26103b5723d4d874eba05681a97a3a2b, type: 3}
+  draw: {fileID: 8300000, guid: 4a17a10a2e04b0d499ece8cab3cd1235, type: 3}
+  early: {fileID: 8300000, guid: 2eac19c47de5fb843aeb41bc9872618e, type: 3}
   bang: {fileID: 8300000, guid: dc27748e2ba454f4d835db853b0040d2, type: 3}
 --- !u!1 &1795776857
 GameObject:
@@ -2957,7 +2958,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3192,7 +3193,6 @@ MonoBehaviour:
   canDraw: 0
   monkey1Ready: 0
   monkey2Ready: 0
-  readyCheck: 0
   monkey1Hit: 0
   monkey2Hit: 0
   monkey1Win: 0

@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip num2;
     public AudioClip num1;
     public AudioClip draw;
+    public AudioClip early;
     public AudioClip bang;
 
     private void Awake()

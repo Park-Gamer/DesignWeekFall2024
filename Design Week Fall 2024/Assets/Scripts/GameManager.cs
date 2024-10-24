@@ -29,13 +29,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool canDraw = false; // Determines when players can draw
     public bool monkey1Ready = false; 
     public bool monkey2Ready = false;
-    public bool readyCheck = false;
     public bool monkey1Hit = false; // Determines if player hit
     public bool monkey2Hit = false; 
     public bool monkey1Win = false; // Determines if player lost
     public bool monkey2Win = false;
     private bool canStart = false;
     private bool hasShot = false;
+    private bool audioCheck = false;
 
     AudioManager audioManager;
 
@@ -73,11 +73,14 @@ public class GameManager : MonoBehaviour
             Monkey1Check();
             Monkey2Check();
         }
-        else if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A)) // Early user input check
+        else if(Input.GetKeyDown(KeyCode.D) && canStart && !audioCheck || Input.GetKeyDown(KeyCode.A) && canStart && !audioCheck) // Early user input check
         {
+            audioCheck = true;
+            audioManager.PlaySFX(audioManager.early);
             // Reset variables
             countDownVisual.text = "Too Early!";
             countdownTime = 4;
+            StartCoroutine(WaitForAudio());
         }
 
         if (Input.GetKeyDown(KeyCode.R)) // Reload scene
@@ -148,6 +151,12 @@ public class GameManager : MonoBehaviour
         countDownVisual.gameObject.SetActive(false); // Delete text
     }
 
+    IEnumerator WaitForAudio() // Countdown till draw timer
+    {
+        yield return new WaitForSeconds(2f); // Wait before activating text
+        audioCheck = false;
+    }
+
     void AudioCountDown()
     {
         // Play audio based on the number in the countdown
@@ -186,21 +195,5 @@ public class GameManager : MonoBehaviour
             m2isTiming = false;
             monkey2Time.text = "Monkey 2's Draw Time: " + m2drawTime.ToString("0.000") + "ms"; // Set float variable to text
         }
-    }
-
-    void ReadyCheck()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            monkey1Ready = true;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            monkey2Ready = true;
-        }
-        if (monkey1Ready && monkey2Ready)
-        {
-            readyCheck = true;
-        }
-    }    
+    } 
 }

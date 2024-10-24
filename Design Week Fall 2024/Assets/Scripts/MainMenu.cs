@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     public GameObject rules;
     public void PlayGame()
     {
-        SceneManager.LoadScene("ReadyCheck");  
+        StartCoroutine(DelayForAudio()); 
     }
 
     void Start()
@@ -27,5 +27,11 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    IEnumerator DelayForAudio() // Countdown till draw timer
+    {
+        yield return new WaitForSeconds(1f); 
+        SceneManager.LoadScene("ReadyCheck");
     }
 }
