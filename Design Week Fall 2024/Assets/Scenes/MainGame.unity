@@ -2548,7 +2548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1876151893}
   SFXSource: {fileID: 1418645600}
-  duelMusic: {fileID: 8300000, guid: 506f6cc0334c96240990405d28b16a2f, type: 3}
+  duelMusic: {fileID: 8300000, guid: 431ff0a27b5923948bf022168bb51b2a, type: 3}
   num3: {fileID: 8300000, guid: 7cd4353b987a1624890d1dceea465541, type: 3}
   num2: {fileID: 8300000, guid: 8a5e760404790dd418af56437f81f4ad, type: 3}
   num1: {fileID: 8300000, guid: 380e8dacb589e8947a87246eef9f7066, type: 3}
@@ -2732,7 +2732,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.377
   m_Pitch: 1
   Loop: 1
   Mute: 0
