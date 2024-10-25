@@ -11,6 +11,8 @@ public class ReadyCheck : MonoBehaviour
 
     MenuAudio audioController;
 
+    public GameObject dialogeExchange;
+
     private void Awake()
     {
         audioController = GameObject.FindGameObjectWithTag("Audio").GetComponent<MenuAudio>(); // Get audio manager
@@ -20,6 +22,7 @@ public class ReadyCheck : MonoBehaviour
     {
         ready1On.SetActive(false);
         ready2On.SetActive(false);
+        dialogeExchange.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,15 +45,15 @@ public class ReadyCheck : MonoBehaviour
 
         if (p1Ready && p2Ready)
         {
-            StartCoroutine(DelayForAudio());
+            ready1On.SetActive(false);
+            ready2On.SetActive(false);
+            dialogeExchange.SetActive(true);
         }
-    }
 
-    IEnumerator DelayForAudio() // Countdown till draw timer
-    {
-        yield return new WaitForSeconds(1f);
-        ready1On.SetActive(false);
-        ready2On.SetActive(false);
-        SceneManager.LoadScene("MainGame");
+        if (Input.GetKeyDown(KeyCode.R)) // Reload scene
+        {
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.name);
+        }
     }
 }
