@@ -25,14 +25,14 @@ public class ReadyCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && !p1Ready)
         {
             p1Ready = true;
             ready1Off.SetActive(false);
             ready1On.SetActive(true);
             audioController.PlaySFX(audioController.readyClick);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && !p2Ready)
         {
             p2Ready = true;
             ready2Off.SetActive(false);
