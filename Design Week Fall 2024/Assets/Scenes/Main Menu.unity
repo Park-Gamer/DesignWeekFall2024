@@ -2146,7 +2146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1420876898}
   SFXSource: {fileID: 528682671}
-  menuMusic: {fileID: 8300000, guid: 3d9e029a52f9d8e49b10a189aead1b10, type: 3}
+  menuMusic: {fileID: 8300000, guid: b645e191c4cfff3499b8e9ef403c0725, type: 3}
   bananaButton: {fileID: 8300000, guid: 2cc28dd67bc5d994584c7def18ad26ce, type: 3}
   readyClick: {fileID: 0}
 --- !u!4 &1983795663

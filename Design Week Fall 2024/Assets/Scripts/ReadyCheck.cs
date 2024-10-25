@@ -49,6 +49,8 @@ public class ReadyCheck : MonoBehaviour
     IEnumerator DelayForAudio() // Countdown till draw timer
     {
         yield return new WaitForSeconds(1f);
+        ready1On.SetActive(false);
+        ready2On.SetActive(false);
         SceneManager.LoadScene("MainGame");
     }
 }
